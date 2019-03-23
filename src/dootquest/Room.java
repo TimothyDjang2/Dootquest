@@ -1,6 +1,8 @@
 package dootquest;
 
-import java.util.List;
+import java.lang.StringBuilder;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import dootquest.stuff.Item;
 import java.util.Map;
 import dootquest.Direction;
@@ -11,18 +13,18 @@ public class Room {
 
     String name = "default";
     String desc = "Looks like the dev was too lazy to describe this room yet.";
-    List<Item> items;
+    ArrayList<Item> items;
     Map<Integer, ConnectableRoom> connectedRooms;
-
-    public Room(String name) {
-        this.name = name;
-        connectedRooms = new HashMap<>();
-    }
 
     public Room(String name, String desc) {
         this.desc = desc;
         this.name = name;
         connectedRooms = new HashMap<>();
+        items = new ArrayList<>();
+    }
+
+    public Room(String name) {
+        this(name, "Looks like the dev was too lazy to describe this room yet.");
     }
 
     public void setName(String name) {
@@ -31,6 +33,14 @@ public class Room {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 
     /**
@@ -54,12 +64,21 @@ public class Room {
         }
     }
 
+    public Item findItem(String name) {
+        for (Item item : items) {
+            if (item.getName().toLowerCase().equals(name.toLowerCase())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public String getPossibleDirections() {
         
-        String printString = "You can go ";
+        StringBuilder printString = new StringBuilder("You can go ");
 
         if (connectedRooms.size() == 0) {
-            printString = "You can't go anywhere to exit this room.";
+            printString.append("You can't go anywhere to exit this room.");
         } else {
             Set<Integer> keys = connectedRooms.keySet();
             for (int i : keys) {
@@ -69,17 +88,43 @@ public class Room {
             }
 
             for (int i : keys) {    
-                printString = (printString + Direction.convertToString(i));
+                printString.append(Direction.convertToString(i));
                 if (i < keys.size() - 2) {
-                    printString = (printString + ", ");
+                    printString.append(", ");
                 } else if (i == keys.size() - 2) {
-                    printString = (printString + ", or");
+                    printString.append(", or ");
                 } else {
-                    printString = (printString + " here.");
+                    printString.append(" here.");
                 }
             }
         }
-        return printString;
+        return printString.toString();
+    }
+
+    public String getItems() {
+
+        StringBuilder printString = new StringBuilder("There is ");
+
+        if (items.size() > 0) {
+
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getName().substring(0,3).toLowerCase().equals("the")) {
+                    printString.append(items.get(i).getName().toLowerCase());
+                } else if (Vocabulary.isVowel(items.get(i).getName().charAt(0))) {
+                    printString.append("an " + items.get(i).getName().toLowerCase());
+                } else {
+                    printString.append("a " + items.get(i).getName().toLowerCase());
+                }
+                if (i < items.size() - 2) {
+                    printString.append(", ");
+                } else if (i == items.size() - 2) {
+                    printString.append(" and ");
+                } else {
+                    printString.append(" here.");
+                }
+            }
+        }
+        return printString.toString();
     }
 
     public void unlock(int direction) {

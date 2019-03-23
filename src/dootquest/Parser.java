@@ -1,5 +1,6 @@
 package dootquest;
 
+import java.lang.StringBuilder;
 import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
@@ -41,4 +42,17 @@ public class Parser {
         cmdList.toArray(output);
         return output;
     }
+
+    public String combine(int startIndex, int endIndex, String[] array) {
+
+        StringBuilder returnString = new StringBuilder();
+
+        for (int i = startIndex; (i <= endIndex && i < array.length); i++) {
+            returnString.append(array[i] + " ");
+        }
+
+        String returnStr = returnString.toString();
+        return returnStr.substring(0, returnStr.length() - 1);
+    }
+
 }
