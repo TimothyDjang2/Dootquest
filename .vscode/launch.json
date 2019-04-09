@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GameLoop",
+            "request": "launch",
+            "mainClass": "dootquest.GameLoop",
+            "projectName": "dootQuest_20288af5"
+        }
+    ]
+}

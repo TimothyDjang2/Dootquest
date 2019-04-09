@@ -1,5 +1,6 @@
 package dootquest;
 
+//Class used when connecting two rooms, in case the connection needs to be locked.
 public class ConnectableRoom {
 
     public Room room;

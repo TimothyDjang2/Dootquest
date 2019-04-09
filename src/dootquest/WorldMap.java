@@ -5,7 +5,7 @@ import dootquest.stuff.Item;
 import dootquest.Direction;
 
 /**
- * Generates all the rooms and bits.
+ * Generates all your rooms, items, etc. here.
  */
 public class WorldMap {
     Room 
@@ -25,8 +25,11 @@ public class WorldMap {
 
         second.connect(Direction.SOUTH, main, false);
         second.addItem(new Item("Apple", "A nice ZerdCorp brand ISO standard apple, fresh off the press."));
-        second.addItem(new Item("Big Apple", "A nice ZerdCorp brand ISO standard apple, fresh off the press.", false));
-        second.addItem(new Item("The Biggest Apple", "It cHoNkY.", false, "You are too indimidated by the size of this apple to lift it."));
+        second.addItem(new Item("Big Apple", "A slightly oversized ZerdCorp brand ISO standard apple, fresh off the press.", false));
+        Item theBiggestApple = new Item("The Biggest Apple", "It cHoNkY.", false, "You are too indimidated by the size of this apple to lift it.");
+        theBiggestApple.setHidden(true);
+        second.addItem(theBiggestApple);
+
 
         
     }

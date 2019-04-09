@@ -1,5 +1,6 @@
 package dootquest;
 
+//Class that interprets directions, north, south, etc. Used to convert between understood directions from input to numbers.
 public final class Direction {
     public static final int NORTH = 0;
     public static final int EAST = 1;

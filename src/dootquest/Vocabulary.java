@@ -1,5 +1,6 @@
 package dootquest;
 
+//Class for understanding grammar stuff, like what a vowel is.
 public class Vocabulary {
 
     public static boolean isVowel(Character c) {

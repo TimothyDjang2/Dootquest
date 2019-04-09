@@ -8,7 +8,7 @@ public class GameLoop {
     String gameState;
     Parser parser;
     WorldMap worldMap;
-    Player player;
+    public static Player player;
 
     public static void main(String[] args) {
         new GameLoop();
@@ -57,7 +57,7 @@ public class GameLoop {
         switch (cmds[0]) {
             case "start":
                 System.out.println("is does start");
-                player = new Player(worldMap.main);
+                player = new Player(worldMap.main, 100);
                 gameState = "newGame";
                 break;
             default:
@@ -73,8 +73,16 @@ public class GameLoop {
             case "x":
                 if (cmds.length == 1) {
                     examine();
+                } else if (cmds[1].equals("me") && cmds.length == 2) {
+                    System.out.println(player.getDesc());
+                    System.out.println("Looks like you have " + (int)Math.round(player.getHealth()) + "/" + (int)Math.round(player.getMaxHealth()) + " health left. Excellent.");
                 } else {
-                    Item item = player.getPosition().findItem(cmds[1]);
+                    Item item = player.getPosition().findItem(parser.combine(1, cmds.length, cmds));
+                    if (item != null) {
+                        examine(item);
+                        break;
+                    }
+                    item = player.findItem(parser.combine(1, cmds.length, cmds));
                     if (item != null) {
                         examine(item);
                         break;
@@ -122,13 +130,19 @@ public class GameLoop {
                 System.out.println(player.getInventory());
                 break;
             case "drop":
-                Item item = player.findItem(parser.combine(1, cmds.length, cmds));
-                if (item != null) {
-                    player.removeItem(item);
-                    player.getPosition().addItem(item);
-                    System.out.println("You dropped the " + item.getName().toLowerCase() + ".");
+                if (cmds.length == 1) {
+                    System.out.println("Drop the what now?");
+                } else if (cmds[1].equals("the beat") && cmds.length == 2) {
+
                 } else {
-                    System.out.println("You don't have any of those!");
+                    Item item = player.findItem(parser.combine(1, cmds.length, cmds));
+                    if (item != null) {
+                        player.removeItem(item);
+                        player.getPosition().addItem(item);
+                        System.out.println("You dropped the " + item.getName().toLowerCase() + ".");
+                    } else {
+                        System.out.println("You don't have any of those!");
+                    }
                 }
                 break;
             default:

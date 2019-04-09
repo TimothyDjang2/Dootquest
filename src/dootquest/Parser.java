@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
 
+//Class that deals with input from the user, and does more complicated string methods than Vocabulary.
 public class Parser {
 
     Scanner scanner;

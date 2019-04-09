@@ -9,6 +9,7 @@ import dootquest.Direction;
 import java.util.HashMap;
 import java.util.Set;
 
+//Class that is a room and does room stuff.
 public class Room {
 
     String name = "default";

@@ -5,10 +5,14 @@ import dootquest.stuff.Item;
 
 public class Player {
 
+    private double health = 100;
+    private double maxHealth = 100;
     private Room position;
     private ArrayList<Item> inventory;
 
-    public Player(Room position) {
+    public Player(Room position, double health) {
+        this.health = health;
+        this.maxHealth = health;
         this.position = position;
         inventory = new ArrayList<>();
     }
@@ -19,6 +23,38 @@ public class Player {
 
     public void setPosition(Room room) {
         position = room;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setHealth(double newHealth) {
+        health = newHealth;
+    }
+
+    public String getDesc() {
+        String desc;
+        if (health >  maxHealth) {
+            desc = "You feel almost like an immortal.";
+        } else if (health > (.75 * maxHealth)) {
+            desc = "Never felt better!";
+        } else if (health <= (.75 * maxHealth) && health > (.5 * maxHealth)) {
+            desc = "Looking sharp as always.";
+        } else if (health <= (.5 * maxHealth) && health > (.25 * maxHealth)) {
+            desc = "A bit tired.";
+        } else {
+            desc = "You've been better.";
+        }
+        return desc;
+    }
+
+    public void incrementHealth(double incr) {
+        health += incr;
     }
 
     public void giveItem(Item item) {
